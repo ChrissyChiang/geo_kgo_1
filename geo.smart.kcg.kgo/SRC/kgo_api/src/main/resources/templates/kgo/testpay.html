@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<form enctype="application/x-www-form-urlencoded" method="post" th:action="${actionUrl}">
+  <h1 th:text="${actionUrl}"></h1>
+  <div th:each="element : ${data}">
+    <label th:text="${element.key}"></label>
+    <input type="text" th:name="${element.key}" th:value="${element.value}"/>
+  </div>
+  <button type="submit">GO</button>
+</form>
+</body>
+</html>

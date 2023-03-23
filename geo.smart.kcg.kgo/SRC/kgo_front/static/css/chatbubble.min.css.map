@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "",
+    "sources": [
+        "../../chatbot/css/chatbubble.scss"
+    ],
+    "names": [],
+    "file": "chatbubble.min.css"
+}

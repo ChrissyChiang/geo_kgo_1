@@ -1,0 +1,3 @@
+-- city coin
+ALTER TABLE KGO.dbo.KGO_CASESET ADD CityCoin bit DEFAULT 1 NULL;
+UPDATE KGO.dbo.KGO_CASESET SET CityCoin=1;

@@ -1,0 +1,248 @@
+package gov.kcg.kgo.repository.custom.impl;
+
+import gov.kcg.kgo.dto.BidCaseListQueryDto;
+import gov.kcg.kgo.dto.BidServiceMenuQueryDto;
+import gov.kcg.kgo.dto.CaseManagementQueryDto;
+import gov.kcg.kgo.dto.CasesetMemoHotSearchDto;
+import gov.kcg.kgo.enums.backend.PublishStateEnum;
+import gov.kcg.kgo.enums.common.MainTypeEnum;
+import gov.kcg.kgo.repository.custom.KgoCasesetRepositoryCustom;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.util.ObjectUtils;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import java.util.List;
+
+public class KgoCasesetRepositoryCustomImpl implements KgoCasesetRepositoryCustom {
+
+	/** Logger. */
+	private static final Logger LOGGER = LoggerFactory.getLogger(KgoCasesetRepositoryCustomImpl.class);
+
+	@PersistenceContext
+	public EntityManager entityManager;
+
+	/**
+	 * 服務案件清單 - 案件搜尋 (for 畫面初始)
+	 */
+	@Override
+	public List<CaseManagementQueryDto> findAllCase() {
+		return findAllCase(null, StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY,
+				StringUtils.EMPTY);
+	}
+
+	/**
+	 * 服務案件清單 - 案件搜尋 (for 案件排序)
+	 */
+	@Override
+	public List<CaseManagementQueryDto> findAllCase(Integer organSeq) {
+		return findAllCase(organSeq, StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY, StringUtils.EMPTY);
+	}
+
+	/**
+	 * 
+	 * @param organId     機關分類代碼 from KGO_GROUP_LEVEL.seq
+	 * @param ownerOrgan  權責機關代碼
+	 * @param caseSetId   案件種類ID
+	 * @param caseSetName 案件名稱
+	 * @param userId      管理者ID
+	 * @return
+	 */
+	@Override
+	public List<CaseManagementQueryDto> findAllCase(Integer organSeq, String ownerOrgan, String caseSetId,
+			String caseSetName, String userId) {
+
+		StringBuilder sb = new StringBuilder();
+
+		/**
+		 * Generate custom query String
+		 */
+		sb.append("with MANAGER_ALL as ( ");
+		sb.append(
+				"Select k.caseSetId CASESET_ID, k.manager MANAGER, ku.Name NAME, ROW_NUMBER() OVER (PARTITION BY k.caseSetId ORDER BY k.Manager ASC) ROWNUM ");
+		sb.append("From KGO_CASESET_MANAGER k Left Join KGO_USER ku On ku.UserId = k.Manager ");
+		sb.append("), ");
+		sb.append("SIZE_OF_MANAGER_BY_CASE_ID as ( ");
+		sb.append("Select CASESET_ID, MAX(rownum) as SIZE ");
+		sb.append("From MANAGER_ALL  ");
+		sb.append("Group By CASESET_ID ");
+		sb.append("), ");
+		sb.append("FINAL_MANAGER_DATA as ( ");
+		sb.append("Select m.CASESET_ID, m.MANAGER, Case When g.SIZE > 1 then m.NAME + '...' else m.NAME End As NAME ");
+		sb.append("From SIZE_OF_MANAGER_BY_CASE_ID g, MANAGER_ALL m ");
+		sb.append("where g.SIZE = m.ROWNUM and g.CASESET_ID = m.CASESET_ID ");
+		sb.append(") ");
+		sb.append(
+				"Select c.Sort SORT, c.ServiceTo SERVICE_TO, c.CaseSetId CASESET_ID, c.CaseSetName CASESET_NAME, c.Organ ORGAN_ID, gl.Name ORGAN_NAME, c.OwnerOrgan OWNER_ORGAN_ID, o2.OrganName OWNER_ORGAN_NAME, f.NAME as MANAGER_NAME , c.Status [STATUS], c.CaseType CASE_TYPE ");
+		sb.append("From KGO_CASESET c ");
+		sb.append("Left Join KGO_GROUP_LEVEL gl On c.Organ = gl.Seq ");	
+		sb.append("Left Join KGO_ORGAN o2 On c.OwnerOrgan = o2.OrganId ");
+		sb.append("Left Join FINAL_MANAGER_DATA f on f.CASESET_ID = c.CaseSetId ");
+		if (StringUtils.isNotBlank(userId)) {
+			sb.append(", MANAGER_ALL m ");
+		}
+		sb.append("where 1=1 ");
+		if (!ObjectUtils.isEmpty(organSeq)) {
+			sb.append("and c.Organ = :organSeq ");
+		}
+		if (StringUtils.isNotBlank(ownerOrgan)) {
+			sb.append("and c.OwnerOrgan = :ownerOrgan ");
+		}
+		if (StringUtils.isNotBlank(caseSetId)) {
+			sb.append("and c.CaseSetId = :caseSetId ");
+		}
+		if (StringUtils.isNotBlank(caseSetName)) {
+			sb.append("and c.CaseSetName like CONCAT('%', :caseSetName,'%') ");
+		}
+		if (StringUtils.isNotBlank(userId)) {
+			sb.append("and m.CASESET_ID = c.CaseSetId ");
+			sb.append("and m.MANAGER = :userId ");
+		}
+
+		/**
+		 * Native Query
+		 */
+		Query query = entityManager.createNativeQuery(sb.toString(), CaseManagementQueryDto.class);
+		if (!ObjectUtils.isEmpty(organSeq)) {
+			query.setParameter("organSeq", organSeq);
+		}
+		if (StringUtils.isNotBlank(ownerOrgan)) {
+			query.setParameter("ownerOrgan", ownerOrgan);
+		}
+		if (StringUtils.isNotBlank(caseSetId)) {
+			query.setParameter("caseSetId", caseSetId);
+		}
+		if (StringUtils.isNotBlank(caseSetName)) {
+			query.setParameter("caseSetName", caseSetName);
+		}
+		if (StringUtils.isNotBlank(userId)) {
+			query.setParameter("userId", userId);
+		}
+
+		return query.getResultList();
+	}
+
+	/**
+	 * 申辦服務選單-初始畫面-申辦案件數查詢
+	 * 
+	 * @param status
+	 * @return
+	 */
+	@Override
+	public List<BidServiceMenuQueryDto> getBidServiceMenuCaseCountData(String mainType, String status) {
+
+		StringBuilder sb = new StringBuilder();
+
+		/**
+		 * Generate custom query String
+		 */
+		sb.append(
+				"with temp as (\r\n" + 
+				"select c."+ mainType +" as VALUE, gl.Name NAME, Count(c.CaseSetId) COUNT\r\n" + 
+				"from KGO_CASESET c\r\n" + 
+				"left join KGO_GROUP_LEVEL gl on c.Organ = gl.Seq\r\n" + 
+				"where c.Status<> :status\r\n" + 
+				"group by c."+mainType+", gl.Name\r\n" + 
+				")\r\n" + 
+				"select kgl.seq VALUE, kgl.NAME, isnull(temp.COUNT,0) COUNT\r\n" + 
+				"from KGO_GROUP_LEVEL kgl left join temp on kgl.seq = temp.VALUE\r\n" + 
+				"where kgl.state <> :status and kgl.MainType = :mainType");
+		
+		/**
+		 * Native Query
+		 */
+		Query query = entityManager.createNativeQuery(sb.toString(), BidServiceMenuQueryDto.class);
+		query.setParameter("mainType", mainType);
+		query.setParameter("status", status);
+
+		return query.getResultList();
+	}
+
+	/**
+	 * 熱門搜尋-關鍵字查巡
+	 *
+	 * @param keyword
+	 * @param pageable
+	 * @return Page<CasesetMemoHotSearchDto>
+	 */
+	@Override
+	public Page<CasesetMemoHotSearchDto> findByKeywordPaged(String keyword, Pageable pageable) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("from KGO_CASESET kc " +
+				"inner join KGO_CASESET_MEMO kcm on kc.CaseSetId = kcm.CaseSetId " +
+				"where kc.CaseSetName like CONCAT('%', :keyword, '%') or kcm.Title like CONCAT('%', :keyword, '%') or kcm.ContentHtml like CONCAT('%', :keyword, '%')");
+		/**
+		 * 取得分頁資料
+		 */
+		StringBuilder columnNameSb = new StringBuilder();
+		columnNameSb.append("select kc.CaseSetId CASE_SET_ID, kc.CaseSetName CASE_SET_NAME, kcm.title TITLE , kcm.ContentHtml CONTENT_HTML ");
+		columnNameSb.append(sb);
+		Query query = entityManager.createNativeQuery(columnNameSb.toString(), CasesetMemoHotSearchDto.class);
+		query.setParameter("keyword", keyword);
+		query.setFirstResult((int)pageable.getOffset());
+		query.setMaxResults(pageable.getPageSize());
+
+		/**
+		 * 取得總筆數
+		 */
+		StringBuilder countSb = new StringBuilder();
+		countSb.append("select count(*) ");
+		countSb.append(sb);
+		Query countQuery = entityManager.createNativeQuery(countSb.toString());
+		countQuery.setParameter("keyword", keyword);
+
+		/**
+		 * 取得結果
+		 */
+		Page<CasesetMemoHotSearchDto> page = new PageImpl<>(query.getResultList(), pageable, Long.valueOf((int)countQuery.getSingleResult()));
+		return page;
+	}
+
+	/**
+	 * 申辦案件清單-申辦案件資料查詢
+	 * 
+	 * @param mainType
+	 * @param value
+	 * @return
+	 */
+	@Override
+	public List<BidCaseListQueryDto> getBidCaseListData(String mainType, String value) {
+
+		StringBuilder sb = new StringBuilder();
+
+		/**
+		 * Generate custom query String
+		 */
+		sb.append(
+				"select STRING_AGG(ct.ApplyType, ',') APPLY_TYPE, c.CaseSetId CASESET_ID, c.CaseSetName CASESET_NAME\r\n");
+		sb.append("from KGO_CASESET c\r\n");
+		sb.append("left join KGO_CASESET_TYPE ct on c.CaseSetId = ct.CaseSetId \r\n");
+		sb.append("where \r\n");
+		if (mainType.equalsIgnoreCase(MainTypeEnum.ORGAN.getValue())) {
+			sb.append("c.Organ = :value\r\n");
+		} else if (mainType.equalsIgnoreCase(MainTypeEnum.ROLE.getValue())) {
+			sb.append("c.[role] = :value\r\n");
+		} else if (mainType.equalsIgnoreCase(MainTypeEnum.SERVICE.getValue())) {
+			sb.append("c.[service] = :value\r\n");
+		}
+		
+		sb.append("and c.Status<> :status \r\n");
+		sb.append("Group by c.CaseSetId, c.CaseSetName\r\n");
+		sb.append("Order By c.CaseSetId desc");
+
+		/**
+		 * Native Query
+		 */
+		Query query = entityManager.createNativeQuery(sb.toString(), BidCaseListQueryDto.class);
+		query.setParameter("value", value);
+		query.setParameter("status", PublishStateEnum.OFF.getValue());
+		
+		return query.getResultList();
+	}
+}

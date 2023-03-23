@@ -1,0 +1,321 @@
+
+#flowContainer {
+    position: relative;
+    overflow: scroll;
+    flex: 1;
+    background-image: linear-gradient(
+      90deg,
+      rgba(0, 229, 255, 0.25) 10%,
+      rgba(0, 0, 0, 0) 10%
+    ),
+    linear-gradient(rgb(0, 229, 255, 0.35) 10%, rgba(0, 229, 255, 0.25) 10%);
+    background-size: 10px 10px;
+}
+
+.flow-tooltar {
+    padding-left: 10px;
+    box-sizing: border-box;
+    height: 42px;
+    line-height: 42px;
+    z-index: 3;
+    border-bottom: 1px solid #DADCE0;
+}
+
+.jtk-overlay {
+    cursor: pointer;
+    color: #4A4A4A;
+}
+
+
+.flow-node-pmenu {
+    cursor: pointer;
+    height: 32px;
+    line-height: 32px;
+    width: 125px;
+    display: block;
+    font-weight: bold;
+    color: #4A4A4A;
+    padding-left: 5px;
+}
+
+.flow-node-pmenu:hover {
+    background-color: #E0E0E0;
+}
+
+.flow-node-menu-li {
+    color: #565758;
+    width: 120px;
+    border: 1px solid #4e62ad;
+    margin: 5px 0 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    padding-left: 8px;
+}
+
+.flow-node-menu-li:hover {
+    /* 設置移動樣式*/
+    cursor: move;
+    background-color: #F0F7FF;
+    border: 1px solid #4f5467;
+    border-left: 4px solid #4f5467;
+    padding-left: 5px;
+}
+
+.flow-node-menu-ul {
+    list-style: none;
+    padding-left: 20px
+}
+
+/*節點的最外層容器*/
+.flow-node-container {
+    position: absolute;
+    display: flex;
+    width: 300px;
+    border: 2px solid #4e62ad;
+    box-shadow: rgb(151, 185, 244) 2px 2px 2px 3px;
+    height: 85px;
+    /* border: 1px solid #E0E3E7; */
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.flow-node-container:hover {
+    /* 設置移動樣式*/
+    cursor: move;
+    background-color: #F0F7FF;
+    box-shadow: #1879FF 0px 0px 12px 0px;
+    /*box-shadow: #1879FF 0px 0px 12px 0px;*/
+    background-color: #d9dff7;
+    border: 2px dashed #4e62ad;
+}
+
+.flow-node-approved-container {
+    position: absolute;
+    display: flex;
+    width: 300px;
+    border: 2px solid #f02555;
+    box-shadow: rgb(248, 163, 186) 2px 2px 2px 3px;
+    height: 80px;
+    /* border: 1px solid #E0E3E7; */
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.flow-node-approved-container:hover {
+    /* 設置移動樣式*/
+    cursor: move;
+    background-color: #F0F7FF;
+    box-shadow: #ff185d 0px 0px 12px 0px;
+    background-color: #d9dff7;
+    border: 2px dashed #f02555;
+}
+
+.flow-node-back-container {
+    position: absolute;
+    display: flex;
+    width: 150px;
+    border: 2px solid #f09125;
+    box-shadow: rgb(244, 182, 89) 2px 2px 2px 3px;
+    height: 72px;
+    /* border: 1px solid #E0E3E7; */
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.flow-node-back-container:hover {
+    /* 設置移動樣式*/
+    cursor: move;
+    background-color: #F0F7FF;
+    box-shadow: #f09125 0px 0px 12px 0px;
+    background-color: #d9dff7;
+    border: 2px dashed #f09125;
+}
+
+.flow-node-multi-approved-container {
+    position: absolute;
+    display: flex;
+    width: 300px;
+    border: 2px solid #05a44d;
+    box-shadow: rgb(83, 212, 124) 2px 2px 2px 3px;
+    height: 85px;
+    /* border: 1px solid #E0E3E7; */
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.flow-node-multi-approved-container:hover {
+    /* 設置移動樣式*/
+    cursor: move;
+    background-color: #F0F7FF;
+    box-shadow: #05a44d 0px 0px 12px 0px;
+    background-color: #d9dff7;
+    border: 2px dashed #05a44d;
+}
+
+/*點擊樣式*/
+.flow-node-active {
+    background-color: #F0F7FF;
+    /* box-shadow: #1879FF 0px 0px 12px 0px; */
+    background-color: #F0F7FF;
+    border: 2px solid #4e62ad;
+}
+
+.flow-node-approved-active {
+    background-color: #F0F7FF;
+    /*box-shadow: #1879FF 0px 0px 12px 0px;*/
+    background-color: #F0F7FF;
+    border: 2px solid #f02555;
+}
+
+.flow-node-back-active {
+    background-color: #F0F7FF;
+    /*box-shadow: #1879FF 0px 0px 12px 0px;*/
+    background-color: #F0F7FF;
+    border: 2px solid #f09125;
+}
+
+.flow-node-multi-approved-active {
+    background-color: #F0F7FF;
+    /*box-shadow: #1879FF 0px 0px 12px 0px;*/
+    background-color: #F0F7FF;
+    border: 2px solid #05a44d;
+}
+
+/*左側邊線*/
+.flow-node-left {
+    display: flex;
+    align-items: center;
+    margin-left: 3px;
+    /* width: 4px;
+    background-color: #4e62ad;
+    border-radius: 4px 0 0 4px; */
+}
+
+/*左側icon*/
+.flow-node-left-ico {
+    line-height: 32px;
+    margin-left: 8px;
+}
+
+.flow-node-left-ico:hover {
+    /* 拖曳樣式 */
+    cursor: crosshair;
+}
+
+/*節點的文字*/
+.flow-node-text {
+    color: #565758;
+    font-size: 16px;
+    line-height: 20px;
+    margin-left: 8px;
+    margin-top: 2px;
+    width: 80%;
+    /* width: 100px; */
+    /* 设置超出宽度文本显示方式*/
+    /* white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center; */
+}
+
+/*右側icon*/
+.flow-node-right-ico {
+    line-height: 32px;
+    position: absolute;
+    right: 5px;
+    color: #84CF65;
+    cursor: default;
+}
+
+.el-node-state-success {
+    line-height: 32px;
+    position: absolute;
+    right: 5px;
+    color: #84CF65;
+    cursor: default;
+}
+
+.el-node-state-error {
+    line-height: 32px;
+    position: absolute;
+    right: 5px;
+    color: #F56C6C;
+    cursor: default;
+}
+
+.el-node-state-warning {
+    line-height: 32px;
+    position: absolute;
+    right: 5px;
+    color: #E6A23C;
+    cursor: default;
+}
+
+.el-node-state-running {
+    line-height: 32px;
+    position: absolute;
+    right: 5px;
+    color: #84CF65;
+    cursor: default;
+}
+
+
+/*node-form*/
+.flow-node-form-header {
+    height: 32px;
+    border-top: 1px solid #dce3e8;
+    border-bottom: 1px solid #dce3e8;
+    background: #F1F3F4;
+    color: #000;
+    line-height: 32px;
+    padding-left: 12px;
+    font-size: 14px;
+}
+
+.flow-node-form-body {
+    margin-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 20px;
+}
+
+/* 連接線的label樣式*/
+.jtk-overlay.flowLabel:not(.aLabel) {
+    padding: 4px 10px;
+    background-color: white;
+    color: #565758 !important;
+    border: 1px solid #E0E3E7;
+    border-radius: 5px;
+}
+
+/* label空樣式 */
+.emptyFlowLabel {
+}
+
+
+.flow-dot {
+    background-color: #1879FF;
+    border-radius: 10px;
+}
+
+.flow-dot-hover {
+    background-color: red;
+}
+
+.flow-rectangle {
+    background-color: #1879FF;
+}
+
+.flow-rectangle-hover {
+    background-color: red;
+}
+
+.flow-img {
+}
+
+.flow-img-hover {
+}
+
+
+.flow-drop-hover{
+    border: 1px dashed #1879FF;
+}

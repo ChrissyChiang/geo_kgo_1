@@ -1,0 +1,12 @@
+-- 欄位勾選
+ALTER TABLE [dbo].[KGO_CASESET_COLUMN_TEMPLATE] ADD [IsFieldCheck] int NOT NULL Default 0;
+GO
+
+ALTER TABLE [dbo].[KGO_CASESET_COLUMN_CHILD] ADD [IsFieldCheck] int NOT NULL Default 0;
+GO
+
+ALTER TABLE [dbo].[KGO_CASESET_COLUMN_CHILD_TEMPLATE] ADD [IsFieldCheck] int NOT NULL Default 0;
+GO
+
+ALTER TABLE [dbo].[KGO_CASESET_COLUMN] ADD [IsFieldCheck] int NOT NULL Default 0;
+GO

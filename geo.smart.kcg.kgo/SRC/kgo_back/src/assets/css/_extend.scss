@@ -1,0 +1,412 @@
+button {
+  //margin: 0.2rem;
+  margin-right: 0.4rem;
+}
+
+/** 複寫table-responsive start */
+.table-responsive {
+  overflow-x: visible !important;
+}
+/** 複寫table-responsive end */
+
+
+/** 頁碼start */
+.pagination {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 30px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: stretch;
+      -ms-flex-align: stretch;
+          align-items: stretch;
+  height: 100%;
+}
+
+.page_btn {
+  padding: 0;
+  border: 1px solid #b2b2b2;
+  width: 100px;
+  margin: 5px;
+}
+
+.page_btn-next, .page_btn-pre {
+  width: 38px;
+  height: 38px;
+  -webkit-transition: none;
+  transition: none;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 20px;
+  background-image: url(../img/ic-pagination-normal@2x.png);
+}
+
+// .page_btn-next:hover, .page_btn-pre:hover {
+//   background-image: url(../img/ic-pagination-hover@2x.png);
+//   background-size: 20px;
+// }
+
+.page_btn-next:active, .page_btn-pre:active {
+  background-image: url(../img/ic-pagination-active@2x.png);
+}
+
+.page_btn-next {
+  -webkit-transform: scaleX(-1);
+          transform: scaleX(-1);
+}
+
+.page_btn:hover {
+  background-color: #ebf7e8;
+  color: #2d87d4;
+  border-color: #9dc9f0;
+}
+
+.page_btn:active {
+  background-color: #69a5da;
+  color: #fff;
+}
+
+.page_control {
+  margin: 5px;
+}
+
+.page_input {
+  width: 50px;
+  min-width: 0px;
+  height: 100%;
+  padding-right: 10px;
+  padding-left: 10px;
+  border: 1px solid #b2b2b2;
+  border-radius: 4px;
+  text-align: center;
+  margin-right: 5px;
+}
+
+.page_input:hover, .page_input:focus {
+  border-color: #9dc9f0;
+  outline: 0;
+}
+/** 頁碼end */
+
+/** modal start */
+// 解決多重彈窗，關閉scroll消失問題
+.modal { overflow-y: auto }
+
+.modal-header {
+  border-bottom-width: 0;
+}
+
+.modal-header .close {
+  // padding: 1.1rem 1rem 0.9rem 1rem;
+}
+
+.modal-title {
+  width: 100%;
+  text-align: center;
+  padding-left: 30px;
+  font-size: 18px !important;
+}
+
+.modal-content {
+  border-width: 0px;
+  border-radius: 12px;
+}
+ 
+.modal-footer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: auto;
+  padding-top: 0px;
+  border-width: 0px;
+}
+
+.modal-footer .btns {
+  margin-top: 5px;
+}
+
+.modal-page .modal-header {
+  background-color: #99b9e9;
+  color: #fff;
+  padding: 8px 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.modal-page .modal-body > :last-child {
+  margin-bottom: 0px;
+}
+
+.modal-page .modal-body .section {
+  padding: 20px 20px 0px;
+}
+
+.modal-page .modal-body .section_top {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.modal-page .modal-body .section_title {
+  font-size: 18px;
+}
+
+.modal-page .modal-body .section > :last-child {
+  margin-bottom: 0px;
+}
+
+.modal-page .modal-body .formItem_label {
+  min-height: 0px;
+}
+
+.modal-page .modal-body .requiredText {
+  margin-top: 0px;
+  margin-bottom: 10px;
+}
+
+.modal-page .modal-body .formSection {
+  border-width: 0px;
+  margin-bottom: 0px;
+}
+
+.modal-page .modal-body .formSection .formItem {
+  padding: 0;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.modal-page .modal-footer {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.modal-page .modal-footer .btns {
+  margin-top: 0px;
+}
+
+.modal-page .section_content {
+  padding: 20px;
+}
+
+
+
+/** modal end */
+
+.target {
+  border-bottom: none;
+  padding: 30px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.target-timeline {
+  list-style: none;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: relative;
+  margin-bottom: 0;
+}
+
+.target-timeline li {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  text-align: center;
+  color: #999;
+  width: 100%;
+}
+
+.target-timeline li:before {
+  content: "";
+  line-height: 35px;
+  width: 20px;
+  height: 20px;
+  display: block;
+  border-radius: 100%;
+  border: 2px solid #E87C07;
+  margin: 0 auto 10px auto;
+  background: #fff;
+}
+
+.target-timeline li:last-child .rate-align:before {
+  content: none;
+}
+
+.target-timeline li.active {
+  color: #E87C07;
+}
+
+.target-timeline li.active:before {
+  background-color: #E87C07;
+}
+
+.target-timeline .rate-align {
+  display: block;
+  position: relative;
+}
+
+.target-timeline .rate-align:before {
+  content: "";
+  width: 98%;
+  height: 2px;
+  background: #d4d4d4;
+  display: block;
+  position: absolute;
+  top: -21px;
+  left: 50%;
+  z-index: -1;
+}
+
+.target-timeline.green-tartget li:before {
+  border-color: #33B262;
+}
+
+.target-timeline.green-tartget li.active {
+  color: #33B262;
+}
+
+.target-timeline.green-tartget li.active:before {
+  background-color: #33B262;
+}
+
+.target-link {
+  color: #E87C07;
+  text-decoration: none;
+}
+
+.target-link:hover {
+  color: #E87C07;
+  text-decoration: underline;
+}
+
+.form-check-input:disabled ~ .form-check-label, .form-check-input[disabled] ~ .form-check-label {
+  color: #d4d4d4;
+  cursor: initial;
+}
+
+.btn, .btn-line {
+  border-radius: 5px
+}
+
+.form-control {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 5px
+}
+
+.bootstrap-select {
+  // width: 80% !important;
+}
+
+.form-group .bootstrap-select {
+  width: 80% !important;
+}
+
+td .bootstrap-select {
+  width: 80% !important;
+}
+
+.dropdown-menu .bs-searchbox input{
+  width: 95% !important;
+  height: 20px;
+}
+
+.w-55 {
+  width: 55px !important;
+  min-width: 0;
+}
+
+.w-150 {
+  width: 150px !important;
+}
+.w-350 {
+  width: 350px !important;
+}
+
+
+
+// .custom-file, .custom-file-input, .custom-file-label {
+//   height: 35px;
+// }
+
+// .formInput_description {
+//   font-size: 13px;
+//   color: #b2b2b2;
+//   display: block;
+//   padding-top: 5px;
+// }
+
+// .custom-file, .custom-file-input, .custom-file-label {
+//   height: 35px;
+// }
+
+// @media all and (max-width: 767px) {
+//   .custom-file, .custom-file-input, .custom-file-label {
+//     height: 40px;
+//   }
+// }
+
+// .custom-file-label {
+//   border: 1px solid #999;
+//   color: #333;
+//   padding: 5px 12px;
+//   padding-right: 109px;
+//   overflow: hidden;
+//   text-overflow: ellipsis;
+//   white-space: nowrap;
+// }
+
+// .custom-file-label::after {
+//   height: 33px;
+//   background-color: #f5f5f5;
+//   padding: 5px 22px;
+//   color: #666;
+// }
+
+// @media all and (max-width: 767px) {
+//   .custom-file-label::after {
+//     height: 38px;
+//   }
+// }
+
+// .custom-file-input:focus ~ .custom-file-label {
+//   -webkit-box-shadow: none;
+//           box-shadow: none;
+//   border-color: #009b4a;
+// }
+
+// .custom-file-input:hover ~ .custom-file-label {
+//   border-color: #009b4a;
+// }
+
+// .custom-file-input ~ .custom-file-label[data-browse]::after {
+//   color: #666;
+//   padding-left: 22px;
+// }
+
+.w-150 {
+  width: 150px !important;
+}

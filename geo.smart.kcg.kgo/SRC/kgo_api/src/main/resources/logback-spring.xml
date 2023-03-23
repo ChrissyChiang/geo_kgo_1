@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds"
+	debug="false">
+	<contextName>logback</contextName>
+
+	<springProperty scope="context" name="logging.path"
+		source="logging.file.path" />
+	<springProperty scope="context" name="logging.name"
+		source="logging.file.name" />
+	<springProperty scope="context" name="logging.maxHistory"
+		source="logging.file.maxHistory" />
+	<springProperty scope="context" name="logging.totalSizeCap"
+		source="logging.file.totalSizeCap" />
+
+	<!--输出到控制台 -->
+	<appender name="console"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<!-- <filter class="ch.qos.logback.classic.filter.ThresholdFilter"> <level>ERROR</level> 
+			</filter> -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %level %logger[%M:%L] - %msg%n</pattern>
+			<!--設置輸出格式UTF-8/GBK 如果不設置，則獲取默認格式 -->
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!--输出到文件 -->
+	<appender name="file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${logging.path}/${logging.name}.logback.%d{yyyy-MM-dd}-%i.log
+			</fileNamePattern>
+
+			<!-- 日誌文件保留天數 -->
+			<maxHistory>${logging.maxHistory}</maxHistory>
+			<!-- 日誌檔案全部最大的大小 -->
+			<totalSizeCap>${logging.totalSizeCap}</totalSizeCap>
+			<!-- 日志文件最大的大小 -->
+			<maxFileSize>30MB</maxFileSize>
+
+		</rollingPolicy> 
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} %contextName [%thread] %-5level
+				%logger[%M:%L] - %msg%n</pattern>
+			<!--設置輸出格式UTF-8/GBK 如果不設置，則獲取默認格式 -->
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="console" />
+		<appender-ref ref="file" />
+	</root>
+
+	<!-- logback為java中的包 <logger name="com.dudu.controller"/> -->
+
+	<!--logback.kgo：類的全路徑 -->
+	<logger name="gov.kcg.kgo.controller" level="INFO"
+		additivity="false">
+		<appender-ref ref="console" />
+	</logger>
+
+	<!-- <logger name="org.hibernate.type" level="ALL" /> -->
+	<!--<logger name="org.hibernate" level="DEBUG" /> -->
+</configuration>
+

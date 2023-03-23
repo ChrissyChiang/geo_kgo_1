@@ -1,0 +1,13 @@
+package gov.kcg.kgo.geoviewmodel.backend.rs;
+
+import gov.kcg.kgo.geoviewmodel.backend.rs.bean.GeoAppointmentFormViewForm;
+import gov.kcg.kgo.viewModel.base.response.ApiBaseResponse;
+import io.swagger.annotations.ApiModel;
+
+/**
+ * 後台-線上預約臨櫃-編輯：取得該預約對應表單 rs
+ */
+@ApiModel(description = "後台-線上預約臨櫃-編輯：取得該預約對應表單 rs")
+public class GeoAppointmentFormQueryRs extends ApiBaseResponse<GeoAppointmentFormViewForm> {
+
+}

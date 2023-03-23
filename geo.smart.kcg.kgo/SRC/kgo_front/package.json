@@ -1,0 +1,48 @@
+{
+  "name": "kgo_front",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env MODE=dev nuxt",
+    "dev:kgo": "cross-env MODE=dev_kgo nuxt",
+    "build:tp": "cross-env MODE=tp nuxt build",
+    "build:tp8090": "cross-env MODE=tp8090 nuxt build",
+    "build:kgo": "cross-env MODE=kgo nuxt build",
+    "build:kgo_test": "cross-env MODE=kgo_test nuxt build",
+    "start": "nuxt start",
+    "start:tp": "cross-env MODE=tp nuxt start",
+    "start:tp8090": "cross-env MODE=tp8090 nuxt start",
+    "start:kgo_test": "cross-env MODE=kgo_test nuxt start",
+    "start:kgo": "cross-env MODE=kgo nuxt start",
+    "generate": "nuxt generate",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@chenfengyuan/vue-qrcode": "^1.0.2",
+    "@nuxtjs/axios": "^5.12.2",
+    "axios": "^0.20.0",
+    "cookie": "^0.4.1",
+    "cookie-universal-nuxt": "^2.1.4",
+    "crypto-js": "^4.0.0",
+    "file-saver": "^2.0.2",
+    "identify": "^0.1.5",
+    "js-cookie": "^2.2.1",
+    "moment": "^2.29.1",
+    "nuxt": "^2.14.0",
+    "vee-validate": "^3.4.4",
+    "vue": "^2.6.12",
+    "vue2-datepicker": "^3.7.0",
+    "vuex-map-fields": "^1.4.1",
+    "vuex-persistedstate": "^3.1.0"
+  },
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.3",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^26.1.0",
+    "cross-env": "^7.0.2",
+    "jest": "^26.1.0",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^8.0.2",
+    "vue-jest": "^3.0.4"
+  }
+}

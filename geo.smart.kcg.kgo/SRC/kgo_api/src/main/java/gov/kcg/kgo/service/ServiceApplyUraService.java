@@ -1,0 +1,20 @@
+package gov.kcg.kgo.service;
+
+import gov.kcg.kgo.viewModel.backend.serviceApplyUra.pendingReview.rq.*;
+import gov.kcg.kgo.viewModel.backend.serviceApplyUra.pendingReview.rs.*;
+
+public interface ServiceApplyUraService {
+    ServiceApplyUraPendingReviewM1ApproveToM2Rs serviceApplyUraPendingReviewM1ApproveToM2(ServiceApplyUraPendingReviewM1ApproveToM2Rq rq);
+
+    ServiceApplyUraPendingReviewM1ApproveToOMRs serviceApplyUraPendingReviewM1ApproveToOM(ServiceApplyUraPendingReviewM1ApproveToOMRq rq);
+
+    ServiceApplyUraPendingReviewM2ApproveToOMRs serviceApplyUraPendingReviewM2ApproveToOM(ServiceApplyUraPendingReviewM2ApproveToOMRq rq);
+
+    ServiceApplyUraPendingReviewM2ApproveEndRs serviceApplyUraPendingReviewM2ApproveEnd(ServiceApplyUraPendingReviewM2ApproveEndRq rq);
+
+    ServiceApplyUraPendingReviewNotApproveRs serviceApplyUraPendingReviewNotApprove(ServiceApplyUraPendingReviewNotApproveRq rq);
+
+    ServiceApplyUraPendingReviewOMApproveEndRs serviceApplyUraPendingReviewOMApproveEnd(ServiceApplyUraPendingReviewOMApproveEndRq rq);
+
+    ServiceApplyUraPendingReviewViewRs serviceApplyUraPendingReviewView(ServiceApplyUraPendingReviewViewRq rq);
+}

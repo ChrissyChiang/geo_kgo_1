@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://www.ehcache.org/ehcache.xsd"
+         updateCheck="true"
+         monitoring="autodetect"
+         dynamicConfig="true">
+    
+    <!-- 表單欄位資料Map Cache-->
+    <cache name="allCaseSetColumn"
+           maxElementsInMemory="3000"
+           eternal="true"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+
+    <!-- 預約表單欄位資料Map Cache-->
+    <cache name="allAppointmentColumns"
+           maxElementsInMemory="3000"
+           eternal="true"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+    
+    <!-- MyData表單欄位資料Map Cache-->
+    <cache name="allMyDataColumn"
+           maxElementsInMemory="3000"
+           eternal="true"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+    
+    <!-- 取得機關Map Cache-->
+    <cache name="allOrganMap"
+           maxElementsInMemory="3000"
+           eternal="true"
+           overflowToDisk="false"
+           memoryStoreEvictionPolicy="LFU"
+           transactionalMode="off">
+    </cache>
+</ehcache>
